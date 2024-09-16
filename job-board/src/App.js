@@ -97,6 +97,7 @@ function App() {
           <br />
           <br />
           {todos.map((todo, i) => {
+  
             const link = "apply?jobid=" + todo.id;
             const filter = JSON.stringify(todo.attributes).toLowerCase();
             if (filter.includes(search)) {
@@ -110,25 +111,25 @@ function App() {
                       />
                       <div className="description">
                         <span className="span1">
-                          {todo.attributes.JobPosition}
+                          {todo.attributes.jobPosition}
                         </span>
                         <span className="right">
                           {" "}
-                          {todo.attributes.Location}
+                          {todo.attributes.location}
                         </span>
                         <span className="span2">
-                          {todo.attributes.JobStatus}
+                          {todo.attributes.jobStatus}
                         </span>
                         <br />
                         <br />
-                        <span className="span1">{todo.attributes.Agency}</span>
+                        <span className="span1">{todo.attributes.agency}</span>
                       </div>
                     </div>
                     <div className="apply">
                       <a href={link}>
                         <button className="ap1">Apply Now</button>
                       </a>
-                      <div className="ap2">{todo.attributes.Experience}</div>
+                      <div className="ap2">{todo.attributes.experience}</div>
                     </div>
                   </div>{" "}
                   <br />
@@ -136,7 +137,9 @@ function App() {
               );
             } else {
             }
-            
+              
+            return todos
+         
           })}
         </div>
       </div>

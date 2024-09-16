@@ -1,61 +1,49 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function Apply() {
   const queryParams = new URLSearchParams(window.location.search);
   const jobid = queryParams.get("jobid");
-
-  const [job, setJob] = useState({});
+  const [job, setJob] = useState([]);
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [link, setLink] = useState("");
   const [message, setMessage] = useState("");
 
   const update = async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:1337/api/joblists/" + jobid
-      );
-      const job_info = await response.json();
-      setJob(job_info.data.attributes);
-      return job_info;
-    } catch (error) {
-      console.error("Failed to fetch job information:", error);
-    }
+    fetch("http://localhost:1337/api/joblists/" + jobid)
+      .then((res) => res.json())
+      .then((job_info) => {
+        setJob(job_info.data.attributes);
+      });
+    console.log(email);
   };
-
   useEffect(() => {
     update();
   }, []);
 
-  const submit = async () => {
-    try {
-      const requestOptions = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          data: {
-            Name: fullname,
-            Email: email,
-            Message: message,
-            Portfolio_Link: link,
-            Status: "Pending",
-            JobID: jobid,
-          },
-        }),
-      };
+  const subbmit = async () => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        data: {
+          Name: fullname,
+          email: email,
+          message: message,
+          portfolio_link: link,
+          status: "pending",
+          jobID: jobid,
+        },
+      }),
+    };
 
-      const response = await fetch(
-        "http://localhost:1337/api/applicantlists",
-        requestOptions
-      );
-      const result = await response.json();
-      console.log("Application submitted:", result);
-      alert("Application Submitted Successfully...");
-    } catch (error) {
-      console.error("Failed to submit application:", error);
-      alert("Failed to submit application.");
-    }
+    fetch("http://localhost:1337/api/applicantlists", requestOptions).then(
+      (response) => response.json()
+    );
+
+    alert("Application Submited Successful...");
   };
 
   return (
@@ -64,7 +52,7 @@ function Apply() {
         <link
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
           rel="stylesheet"
-        />
+        ></link>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <div>
           <div className="menu1">
@@ -103,16 +91,17 @@ function Apply() {
                   width: "80px",
                   height: "80px",
                   border: "3px solid pink",
-                  marginLeft: "44%",
+                  marginLeft: "40px",
                   marginTop: "18px",
                   borderRadius: "10px",
+                  marginLeft: "44%",
                 }}
               />
+              {/* </div> */}
               <div
-                className="details_"
-                style={{
+                className={{
                   float: "left",
-                  marginTop: "27px",
+                  marwginTop: "27px",
                   marginLeft: "18px",
                   width: "100%",
                 }}
@@ -153,7 +142,7 @@ function Apply() {
         </div>
 
         <div
-          className="job2"
+          clas="job2"
           style={{
             float: "right",
             marginLeft: "20px",
@@ -208,7 +197,7 @@ function Apply() {
                       type="url"
                       onChange={(event) => setLink(event.target.value)}
                       className="form-control"
-                      placeholder="Link to Your Portfolio"
+                      placeholder="Link to  Your Portfolio"
                       style={{ borderRadius: "10px" }}
                       id="usr"
                     />
@@ -227,7 +216,7 @@ function Apply() {
 
                     <input
                       type="button"
-                      onClick={() => submit()}
+                      onClick={() => subbmit()}
                       className="form-control"
                       value="Submit"
                     />
