@@ -79,7 +79,7 @@ export default function Dashboard() {
 
     fetch("http://localhost:1337/api/joblists", requestOptions)
       .then((response) => response.json())
-      .then((data) => this.setState(data));
+     // .then((data) => this.setState(data));
 
     alert("Job Added Successful...");
   };
@@ -131,7 +131,7 @@ export default function Dashboard() {
         <br />
 
         {Applicant.map((list, i) => {
-          console.log(list.attributes)
+        
           return (
             <div key={i}>
               <div>

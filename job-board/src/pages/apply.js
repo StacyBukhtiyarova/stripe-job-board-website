@@ -17,7 +17,7 @@ function Apply() {
       .then((job_info) => {
         setJob(job_info.data.attributes);
       });
-    console.log(email);
+   
   };
   useEffect(() => {
     update();

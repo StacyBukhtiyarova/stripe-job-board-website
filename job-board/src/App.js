@@ -8,7 +8,7 @@ function App() {
   const [search, setSearch] = useState("");
 
   function update() {
-    fetch("http://localhost:1337/api/joblists")
+    return fetch("http://localhost:1337/api/joblists")
       .then((res) => res.json())
       .then((todo) => {
         setTodos(todo.data);
@@ -16,7 +16,7 @@ function App() {
   }
   useEffect(() => {
     update();
-  }, [todos,search]);
+  }, [search]);
 
   return (
     <div>
@@ -97,7 +97,6 @@ function App() {
           <br />
           <br />
           {todos.map((todo, i) => {
-  
             const link = "apply?jobid=" + todo.id;
             const filter = JSON.stringify(todo.attributes).toLowerCase();
             if (filter.includes(search)) {
@@ -105,7 +104,8 @@ function App() {
                 <div key={i}>
                   <div>
                     <div className="detaills">
-                      <img alt=''
+                      <img
+                        alt=""
                         src="https://super-static-assets.s3.amazonaws.com/e7c0f16c-8bd3-4c76-8075-4c86f986e1b2/uploads/favicon/9c68ae10-0a8a-4e3f-9084-3625b19df9cb.png"
                         className="logo"
                       />
@@ -135,11 +135,9 @@ function App() {
                   <br />
                 </div>
               );
-            } else {
             }
-              
-            return todos
-         
+
+            return null;
           })}
         </div>
       </div>
